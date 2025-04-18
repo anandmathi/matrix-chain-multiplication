@@ -8,21 +8,30 @@ def print_optimal_parens(s, i, j):
 def matrix_multiplication(matrices):
 
     n = len(matrices)
-    #2D array to store minimum cost to compute matrix multiplication
-    
-    Cost = [[0 for col in range(n)] for row in range(n)]
 
-    for i in range(len(matrices)):  #Base case
+    # validate input
+    for i in range(n - 1):
+        mat_a = matrices[i]
+        mat_b = matrices[i + 1]
+        cols_a = len(mat_a[0])
+        rows_b = len(mat_b)
+        if cols_a != rows_b:
+            raise ValueError(f"Matrix {i} and Matrix {i+1} have incompatible dimensions: {cols_a} != {rows_b}")
+
+    # 2D array to store minimum cost to compute matrix multiplication
+    Cost = [[float('inf') for col in range(n)] for row in range(n)]
+
+    for i in range(len(matrices)):  # Base case
         Cost[i][i] = 0 
 
     for length in range(1,n+1):
-        for i in range(1,n-length+1):
-            j = i+length -1
+        for i in range(n-length+1):
+            j = i + length - 1
             for k in range(i,j):
-                m_i = len(matrices[i-1]) # dimension of ith matrix
+                m_i = len(matrices[i]) # dimension of ith matrix
                 m_j = len(matrices[j][0]) # dimension of jth matrix
                 m_k = len(matrices[k][0])
-                if Cost[i][j] > Cost[i][k]+Cost[k+1][j]+m_i*m_k*m_j: #Recurrence relation
+                if Cost[i][j] > Cost[i][k]+Cost[k+1][j]+m_i*m_k*m_j: # Recurrence relation
                     Cost[i][j]= Cost[i][k]+Cost[k+1][j]+m_i*m_k*m_j
 
     return Cost[0][n-1]
