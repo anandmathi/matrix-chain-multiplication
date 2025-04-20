@@ -1,3 +1,6 @@
+import sys
+
+
 def print_optimal_parens(s, i, j):
     if i == j:
         return f"A{i+1}"
@@ -42,3 +45,36 @@ def matrix_multiplication(matrices):
     print(f"Minimum Cost: {Cost[0][n - 1]}")
 
     return Cost[0][n-1]
+
+
+def parse_input_file(file_path):
+    matrices = []
+    with open(file_path, 'r') as file:
+        matrix = []
+        for line in file:
+            line = line.strip()
+            if line == "---":
+                if matrix:
+                    matrices.append(matrix)
+                    matrix = []
+            elif line:
+                row = list(map(int, line.split(',')))
+                matrix.append(row)
+        if matrix:
+            matrices.append(matrix)
+    return matrices
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <input_file>")
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+    matrices = parse_input_file(input_file)
+    print(f"Found {len(matrices)} Matrices:")
+    for i, matrix in enumerate(matrices):
+        print(f"Matrix {i + 1}:")
+        for row in matrix:
+            print(row)
+
+    matrix_multiplication(matrices)
