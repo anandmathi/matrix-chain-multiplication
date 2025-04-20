@@ -20,6 +20,8 @@ def matrix_multiplication(matrices):
 
     # 2D array to store minimum cost to compute matrix multiplication
     Cost = [[float('inf') for col in range(n)] for row in range(n)]
+    # 2D array to store split point
+    Split = [[-1 for _ in range(n)] for _ in range(n)]
 
     for i in range(len(matrices)):  # Base case
         Cost[i][i] = 0 
@@ -33,5 +35,10 @@ def matrix_multiplication(matrices):
                 m_k = len(matrices[k][0])
                 if Cost[i][j] > Cost[i][k]+Cost[k+1][j]+m_i*m_k*m_j: # Recurrence relation
                     Cost[i][j]= Cost[i][k]+Cost[k+1][j]+m_i*m_k*m_j
+                    Split[i][j] = k
+
+    optimal = print_optimal_parens(Split, 0, n - 1)
+    print(f"Optimal Split: {optimal}")
+    print(f"Minimum Cost: {Cost[0][n - 1]}")
 
     return Cost[0][n-1]

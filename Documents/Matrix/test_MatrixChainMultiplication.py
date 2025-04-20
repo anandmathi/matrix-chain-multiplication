@@ -1,8 +1,26 @@
 import unittest
+import time
+import tracemalloc
 from MatrixChainMultiplication import matrix_multiplication
 
 
 class TestMatrixChainMultiplication(unittest.TestCase):
+    def measure_performance(self, matrices):
+        tracemalloc.start()
+        start_time = time.time()
+
+        result = matrix_multiplication(matrices)
+
+        end_time = time.time()
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+
+        print(f"Result: {result}")
+        print(f"Time Taken: {end_time - start_time:.6f} seconds")
+        print(f"Memory Usage: Current = {current / 1024:.2f} KB, Peak = {peak / 1024:.2f} KB")
+
+        return result
+
     def test_single_matrix(self):
         matrices = [[2, 3]] # 1x2
         result = matrix_multiplication(matrices)
@@ -76,6 +94,134 @@ class TestMatrixChainMultiplication(unittest.TestCase):
         ]
         with self.assertRaises(ValueError):  # invalid dimensions; this should throw an error
             matrix_multiplication(matrices)
+
+    def test_low_matrices(self):
+        # 10 matrices
+        matrices = [
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+        ]
+        print("Low")
+        self.measure_performance(matrices)
+
+    def test_med_matrices(self):
+        # 30 matrices
+        matrices = [
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            
+        ] * 3
+        print("Med")
+        self.measure_performance(matrices)
+
+    def test_high_matrices(self):
+        # 50 matrices
+        matrices = [
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            [
+                [1, 1, 1],
+                [1, 1, 1]],  # 2x3
+            [
+                [1, 1], 
+                [1, 1],
+                [1, 1]],  # 3x2
+            
+        ] * 5
+        print("High")
+        self.measure_performance(matrices)
 
 if __name__ == "__main__":
     unittest.main()
