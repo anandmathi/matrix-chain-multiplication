@@ -30,4 +30,4 @@ The input file must be formatted as follows:
 ...
 ```
 
-where the rows and columns of each block corresponds with the elements of a matrix. Separate matrices with `---`. Ensure that the columns of matrix `i` is equal to the rows of matrix `i+1` or it will throw an error (because it is not compatible with multiplication).
+where the rows and columns of each block corresponds with the elements of a matrix. Separate matrices with `---`. Ensure that the columns of matrix `i` is equal to the rows of matrix `i+1` or it will throw an error (because it is not compatible with multiplication). Matrix elements must be integers.
